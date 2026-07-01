@@ -1,14 +1,14 @@
 # Ultima actualizacion del Radar Financiero
 
-Actualizado: 29/06/2026
+Actualizado: 01/07/2026 11:12
 Fuente: G:\ARCHIVOS COMPARTIDOS\ADMINISTRACION\GASTOS MENSUALES\GASTOS MENSUALES 2026 LEI.xlsx
 Hoja: JUNIO 26
-Periodo cargado: 2026-06-01 al 2026-06-26
+Periodo cargado: 2026-06-01 al 2026-06-29
 
-- Movimientos reales: 447
+- Movimientos reales: 482
 - Pendientes de clasificar: 7
-- Ingresos: 339379620
-- Egresos: 325274955
-- Saldo operativo: 14104666
-- Saldo CALLAO: -6614746
-- Saldo V. OBLIGADO: 22081349
+- Ingresos: 373792107
+- Egresos: 368939560
+- Saldo operativo: 4852547
+- Saldo CALLAO: -13094835
+- Saldo V. OBLIGADO: 19309319
