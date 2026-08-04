@@ -1,14 +1,14 @@
-# Ultima actualizacion del Radar Financiero
+# Ultima actualizacion del radar financiero
 
-Actualizado: 15/07/2026 14:21
-Fuente: G:\ARCHIVOS COMPARTIDOS\ADMINISTRACION\GASTOS MENSUALES\GASTOS MENSUALES 2026 LEI.xlsx
-Hoja: JULIO26
-Periodo cargado: 2026-07-01 al 2026-07-14
-
-- Movimientos reales: 213
-- Pendientes de clasificar: 0
-- Ingresos: 162146379
-- Egresos: 132095665
-- Saldo operativo: 30050714
-- Saldo CALLAO: 34514707
-- Saldo V. OBLIGADO: -4463993
+- Fecha de actualizacion: 2026-08-04
+- Archivo fuente: `GASTOS MENSUALES 2026 LEI.xlsx`
+- Hoja procesada: `JULIO26`
+- Periodo publicado: 01/07/2026 al 31/07/2026
+- Movimientos validos: 480
+- Ingresos julio: $ 414,027,423.89
+- Egresos julio: $ 361,748,914.50
+- Saldo operativo julio: $ 52,278,509.39
+- Saldo CALLAO: $ 69,474,856.61
+- Saldo V. OBLIGADO: $ -17,196,347.22
+- Paleta aplicada segun manual de marca PRONTO! Express: `#7a7256`, `#ed8b00`, `#ffd100`.
+- Nota: se respetan los signos cargados en Excel, incluidos ajustes positivos dentro de egresos.
