@@ -25,6 +25,9 @@
 
 - Venta diaria por marca: LA PAULINA, ORALI, ILOLAY, SODECAR.
 - Margen bruto por marca.
+- Cruce margen bruto CALLAO vs egresos operativos de CALLAO.
+- Margen bruto julio CALLAO como referencia inicial: 21,84%.
+- Preparar cruce futuro con markups objetivo vs markups reales.
 - Cobranza vs venta facturada.
 - Stock valorizado y dias de stock.
 - Ranking de vendedores por venta, cobranza y cobertura.
