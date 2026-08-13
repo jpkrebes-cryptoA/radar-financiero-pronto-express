@@ -1,0 +1,20 @@
+# Fuentes y exportaciones financieras
+*.xlsx
+*.xls
+movimientos_normalizados_*.csv
+datos/
+fuentes/
+exportaciones/
+mapa_red_inicial.md
+
+# Credenciales y entorno
+.env
+.env.*
+!.env.example
+
+# Temporales y sistema
+~$*
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
