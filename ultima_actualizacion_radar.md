@@ -1,12 +1,12 @@
 # Ultima actualizacion del radar financiero
 
-- Fecha de actualizacion: 2026-08-10
+- Fecha de actualizacion: 2026-08-14
 - Archivo fuente: `GASTOS MENSUALES 2026 LEI.xlsx`
 - Hojas procesadas: `JULIO26` y `AGOSTO26`
-- Periodo cargado: 01/07/2026 al 06/08/2026
-- Movimientos validos total: 562
-- Julio: 480 movimientos | Ingresos $ 414,027,423.89 | Egresos $ 361,748,914.50 | Saldo $ 52,278,509.39
-- Agosto cargado: 82 movimientos | Ingresos $ 63,634,526.20 | Egresos $ 76,869,481.67 | Saldo $ -13,234,955.47
-- Total cargado: Ingresos $ 477,661,950.09 | Egresos $ 438,618,396.17 | Saldo $ 39,043,553.92
-- Vista inicial del tablero: `Agosto 2026`.
-- Nota: se respetan los signos cargados en Excel, incluidos ajustes positivos dentro de egresos.
+- Periodo cargado: 01/07/2026 al 14/08/2026
+- Movimientos validos total: 637
+- Julio: 481 movimientos | Ingresos $ 363,322,914.71 | Egresos $ 361,658,211.55 | Saldo operativo $ 1,664,703.16 | Mov. internos $ 50,704,509.18
+- Agosto cargado: 156 movimientos | Ingresos $ 113,593,913.16 | Egresos $ 118,250,466.98 | Saldo operativo $ -4,656,553.82
+- Total cargado: Ingresos $ 476,916,827.87 | Egresos $ 479,908,678.53 | Saldo operativo $ -2,991,850.66 | Mov. internos $ 50,704,509.18
+- Vista inicial del tablero: `Julio 2026`.
+- Criterio `MOV.INT`: no se computa como ingreso ni egreso operativo; se informa como movimiento interno para no alterar el cash flow consolidado.
