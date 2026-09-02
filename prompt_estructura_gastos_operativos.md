@@ -40,3 +40,19 @@ La exclusion de proveedores de mercaderia debe poder activarse o desactivarse co
 ## Finalidad del tablero
 
 Usar esta informacion para entender cuanto cuesta operar la empresa y luego cruzarla con ventas, margen bruto, contribucion marginal y markups. La pregunta de fondo es si la rentabilidad comercial generada por la venta alcanza para cubrir la estructura de gastos que no corresponde a reposicion de mercaderia.
+
+
+## Rediseño v2
+
+La vista debe trabajar por mes completo, no por rango manual de fechas. Los meses comparables iniciales son Junio 2026, Julio 2026 y Agosto 2026.
+
+La pantalla inicial debe priorizar decision gerencial:
+
+- KPI principal: gasto operativo estructural del mes.
+- Variacion contra mes anterior.
+- Area dominante y porcentaje sobre el total.
+- Peso de CALLAO y V. OBLIGADO.
+- Monto de proveedores de mercaderia excluido.
+- Semaforos para aumento mensual, concentracion por area, peso de mercaderia excluida y calidad de base comparable.
+
+Evitar graficos redundantes. Usar una sola composicion por area, un comparativo mensual y un desglose por unidad/area.
