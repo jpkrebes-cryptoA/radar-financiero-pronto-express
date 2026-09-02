@@ -56,3 +56,8 @@ La pantalla inicial debe priorizar decision gerencial:
 - Semaforos para aumento mensual, concentracion por area, peso de mercaderia excluida y calidad de base comparable.
 
 Evitar graficos redundantes. Usar una sola composicion por area, un comparativo mensual y un desglose por unidad/area.
+
+
+## Versión alternativa - Mapa de Gastos Operativos
+
+Crear una lectura gerencial alternativa con panel lateral de filtros, KPI principal, semáforos y matriz área x mes. Esta versión usa un criterio más estricto: excluye todos los egresos de categoría `PAGO A PROVEEDORES`, además de ingresos y movimientos internos. La finalidad es aislar el gasto estructural puro para compararlo luego contra margen bruto, contribución marginal y markups.
