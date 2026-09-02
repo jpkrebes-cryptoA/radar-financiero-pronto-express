@@ -14,6 +14,11 @@ Usar `TIPO` = `MOV.INT` cuando el movimiento:
 - No represente entrada o salida de dinero frente a terceros.
 - Sea solo un traslado interno entre unidades, cajas, bancos o medios de pago.
 
+Si por carga operativa se usa `TIPO` = `INFORMACION`, entonces la fila debe quedar
+claramente identificada con `CATEGORIA` = `MOV.ENTRE U.NEGOCIOS` o una descripcion
+equivalente. El radar la tratará como movimiento interno para no contaminar el
+cash flow operativo.
+
 ## Como cargarlo en Excel
 
 La forma mas prolija es cargar siempre dos lineas:
@@ -35,6 +40,9 @@ Ambas lineas deberian tener:
 - Misma descripcion, por ejemplo `DESC-ECHEQ`.
 - Mismo detalle, por ejemplo `TRASPASO INTERNO ECHEQ`.
 - Mismo medio, por ejemplo `ECHEQ`.
+
+Control esperado: la suma neta de cada grupo interno deberia dar cero. Si no da
+cero, falta cargar una contraparte o hay diferencia entre los importes.
 
 ## Como lo interpreta el radar
 
