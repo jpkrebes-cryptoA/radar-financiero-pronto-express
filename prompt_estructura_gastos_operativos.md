@@ -61,3 +61,10 @@ Evitar graficos redundantes. Usar una sola composicion por area, un comparativo 
 ## Versión alternativa - Mapa de Gastos Operativos
 
 Crear una lectura gerencial alternativa con panel lateral de filtros, KPI principal, semáforos y matriz área x mes. Esta versión usa un criterio más estricto: excluye todos los egresos de categoría `PAGO A PROVEEDORES`, además de ingresos y movimientos internos. La finalidad es aislar el gasto estructural puro para compararlo luego contra margen bruto, contribución marginal y markups.
+
+
+## Ajuste 2026-09-03
+
+El KPI `Gasto diario promedio` debe calcularse por días trabajados, no por días calendario. Para agosto se usa 19 días trabajados según referencia gerencial/ERP. Junio y julio quedan parametrizados como 21 y 22 días trabajados respectivamente hasta conectar el conteo directo de facturación Chess.
+
+La vista alternativa adopta una estética alineada al tablero de marginaciones: fondo oscuro, acentos amarillo/naranja, paneles compactos y lectura de cierre gerencial. El puente mensual incorpora línea de tendencia.
