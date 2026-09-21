@@ -155,7 +155,7 @@ function KpiCard({ icon: Icon, label, value, note, status = "neutral" }) {
 
 function App() {
   const orderedPeriods = [...data.periods].sort((a, b) => a.month - b.month);
-  const defaultPeriod = orderedPeriods.find((period) => period.month === 8)?.id || orderedPeriods.at(-1)?.id;
+  const defaultPeriod = orderedPeriods.at(-1)?.id;
   const [periodId, setPeriodId] = useState(defaultPeriod);
   const [unit, setUnit] = useState("TODAS");
   const [area, setArea] = useState("TODAS");
