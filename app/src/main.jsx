@@ -59,6 +59,15 @@ function money(value, compact = false) {
   }).format(value || 0);
 }
 
+function moneyExact(value) {
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value || 0);
+}
+
 function pct(value, digits = 1) {
   return `${new Intl.NumberFormat("es-AR", { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(value || 0)}%`;
 }
@@ -147,7 +156,7 @@ function KpiCard({ icon: Icon, label, value, note, status = "neutral" }) {
         <span className="rounded-lg bg-white/8 p-2 text-pronto-amber"><Icon size={19} /></span>
         <span className={`text-xs font-black uppercase tracking-[0.16em] ${statusClass}`}>{label}</span>
       </div>
-      <div className="text-3xl font-black text-pronto-cream">{value}</div>
+      <div className="break-words text-[clamp(1.55rem,2.4vw,2.35rem)] font-black leading-tight text-pronto-cream">{value}</div>
       <p className="mt-2 text-sm leading-snug text-pronto-muted">{note}</p>
     </article>
   );
@@ -257,8 +266,8 @@ function App() {
 
         <main className="space-y-6 p-5 sm:p-7 xl:p-9">
           <section className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">
-            <KpiCard icon={WalletCards} label="Estructura" value={money(total, true)} note={`${movementCount} movimientos en ${period?.label}.`} status="neutral" />
-            <KpiCard icon={Gauge} label="Promedio habil" value={money(avgDay, true)} note={`${period?.workDays || 0} dias con facturacion detectada.`} status="neutral" />
+            <KpiCard icon={WalletCards} label="Estructura" value={moneyExact(total)} note={`${movementCount} movimientos en ${period?.label}.`} status="neutral" />
+            <KpiCard icon={Gauge} label="Promedio habil" value={moneyExact(avgDay)} note={`${period?.workDays || 0} dias con facturacion detectada.`} status="neutral" />
             <KpiCard icon={previousTotal && delta <= 0 ? ArrowDownRight : ArrowUpRight} label="Vs mes anterior" value={previousTotal ? pct(delta) : "s/d"} note={previous ? `Comparado con ${previous.label}.` : "Primer mes disponible."} status={!previousTotal ? "neutral" : delta <= 0 ? "good" : delta < 12 ? "warn" : "bad"} />
             <KpiCard icon={signal === "good" ? CheckCircle2 : AlertTriangle} label="Concentracion" value={pct(concentration)} note={topArea ? `Mayor peso: ${titleCase(topArea.name)}.` : "Sin datos."} status={signal} />
           </section>
