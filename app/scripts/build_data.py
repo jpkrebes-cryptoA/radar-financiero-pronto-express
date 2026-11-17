@@ -16,6 +16,8 @@ MONTH_ORDER = {
     "AGOSTO": 8,
     "SEPTIEMBRE": 9,
     "SEP": 9,
+    "OCTUBRE": 10,
+    "OCT": 10,
 }
 
 MONTH_LABELS = {
@@ -23,6 +25,7 @@ MONTH_LABELS = {
     7: "Julio 2026",
     8: "Agosto 2026",
     9: "Septiembre 2026",
+    10: "Octubre 2026",
 }
 
 
@@ -163,7 +166,7 @@ def build():
             "workDays": len(work_days),
             "firstDate": min(r["fecha"] for r in period_rows),
             "lastDate": max(r["fecha"] for r in period_rows),
-            "isPartial": int(period[:2]) == 9,
+            "isPartial": int(period[:2]) == 10,
         })
 
     payload = {
