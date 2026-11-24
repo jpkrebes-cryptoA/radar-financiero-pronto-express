@@ -26,6 +26,7 @@ import {
   Cell,
   ComposedChart,
   Legend,
+  LabelList,
   Line,
   ResponsiveContainer,
   Tooltip,
@@ -33,6 +34,7 @@ import {
   YAxis,
 } from "recharts";
 import data from "./data/financialData.json";
+import contributionData from "./data/contributionData.json";
 import "./styles.css";
 
 const palette = {
@@ -200,7 +202,9 @@ function App() {
   const previousTotal = sum(previousComparable);
   const delta = previousTotal ? ((total - previousTotal) / previousTotal) * 100 : 0;
   const avgDay = total / Math.max(period?.workDays || 1, 1);
-  const byArea = groupSum(filtered, (row) => row.area).slice(0, 8);
+  const byArea = groupSum(filtered, (row) => row.area)
+    .slice(0, 8)
+    .map((row) => ({ ...row, share: total ? (row.value / total) * 100 : 0 }));
   const byUnitArea = useMemo(() => {
     const pairs = new Map();
     filtered.forEach((row) => {
@@ -225,6 +229,24 @@ function App() {
       promedio: sum(monthRows) / Math.max(month.workDays || 1, 1),
     };
   });
+  const coverageBridge = orderedPeriods
+    .map((month) => {
+      const contribution = contributionData.periods[month.id];
+      if (!contribution) return null;
+      const callaoCost = sum(baseRows(data.rows.filter((row) => row.periodo === month.id), false).filter((row) => row.unidad.includes("CALLAO")));
+      return {
+        name: month.label.replace(" 2026", ""),
+        contribution: contribution.contribution,
+        callaoCost,
+        gap: contribution.contribution - callaoCost,
+      };
+    })
+    .filter(Boolean);
+  const currentContribution = contributionData.periods[periodId];
+  const currentCallaoCost = sum(baseRows(periodRows, false).filter((row) => row.unidad.includes("CALLAO")));
+  const coverageGap = currentContribution ? currentContribution.contribution - currentCallaoCost : null;
+  const coverageRate = currentContribution && currentCallaoCost ? (currentContribution.contribution / currentCallaoCost) * 100 : null;
+  const coverageStatus = coverageGap === null ? "neutral" : coverageGap >= 0 ? "good" : "bad";
   const topArea = byArea[0];
   const concentration = total && topArea ? (topArea.value / total) * 100 : 0;
   const signal = concentration > 60 ? "bad" : concentration > 40 ? "warn" : "good";
@@ -266,24 +288,62 @@ function App() {
 
         <main className="space-y-6 p-5 sm:p-7 xl:p-9">
           <section className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">
-            <KpiCard icon={WalletCards} label="Estructura" value={moneyExact(total)} note={`${movementCount} movimientos en ${period?.label}.`} status="neutral" />
+            <KpiCard icon={WalletCards} label="Gastos mensuales (estructura)" value={moneyExact(total)} note={`${movementCount} movimientos en ${period?.label}.`} status="neutral" />
             <KpiCard icon={Gauge} label="Promedio habil" value={moneyExact(avgDay)} note={`${period?.workDays || 0} dias con facturacion detectada.`} status="neutral" />
             <KpiCard icon={previousTotal && delta <= 0 ? ArrowDownRight : ArrowUpRight} label="Vs mes anterior" value={previousTotal ? pct(delta) : "s/d"} note={previous ? `Comparado con ${previous.label}.` : "Primer mes disponible."} status={!previousTotal ? "neutral" : delta <= 0 ? "good" : delta < 12 ? "warn" : "bad"} />
             <KpiCard icon={signal === "good" ? CheckCircle2 : AlertTriangle} label="Concentracion" value={pct(concentration)} note={topArea ? `Mayor peso: ${titleCase(topArea.name)}.` : "Sin datos."} status={signal} />
           </section>
 
+          <section className="grid grid-cols-1 gap-6 2xl:grid-cols-[0.95fr_1.05fr]">
+            <article className="panel p-5">
+              <SectionTitle icon={CircleDollarSign} title="Cobertura de estructura con contribucion marginal" caption="CALLAO: contribucion neta de IVA frente a gastos operativos registrados. No cambia con filtros de area o categoria." />
+              {currentContribution ? (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Metric value={moneyExact(currentContribution.contribution)} label="Contribucion marginal CALLAO" note={`Margen sobre ventas: ${pct(currentContribution.margin * 100)}. Neto de IVA.`} />
+                  <Metric value={moneyExact(currentCallaoCost)} label="Gasto operativo CALLAO" note="Base Excel: excluye ingresos, mov. internos y pago a proveedores." />
+                  <Metric value={coverageRate ? pct(coverageRate) : "s/d"} label="Cobertura preliminar" note="Contribucion marginal sobre gasto operativo registrado." tone={coverageStatus} />
+                  <Metric value={moneyExact(coverageGap)} label={coverageGap >= 0 ? "Excedente preliminar" : "Faltante preliminar"} note="No es cierre final: el gasto del Excel aun mezcla conceptos con y sin IVA." tone={coverageStatus} />
+                </div>
+              ) : (
+                <p className="text-pronto-muted">No hay contribucion marginal disponible para este periodo.</p>
+              )}
+              <p className="mt-5 border-t border-pronto-line pt-4 text-sm leading-relaxed text-pronto-muted">
+                Criterio de cierre recomendado: comparar contribucion marginal sin IVA con estructura sin IVA recuperable. Sueldos, cargas, impuestos no recuperables y gastos bancarios se conservan por su importe real. Vuelta Obligado requiere su propio ingreso neto de IVA antes de sumarla al resultado empresa.
+              </p>
+            </article>
+
+            <article className="panel p-5">
+              <SectionTitle icon={TrendingUp} title="Contribucion vs estructura CALLAO" caption="Serie mensual para observar cuanto cubre la marginacion antes del resultado final." />
+              <div className="h-[330px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={coverageBridge} margin={{ left: 10, right: 20, top: 20, bottom: 10 }}>
+                    <CartesianGrid vertical={false} stroke="#40382e" />
+                    <XAxis dataKey="name" tick={{ fill: palette.muted, fontSize: 13 }} />
+                    <YAxis tickFormatter={(v) => money(v, true)} tick={{ fill: palette.muted, fontSize: 12 }} />
+                    <Tooltip content={<TooltipBox />} />
+                    <Legend />
+                    <Bar dataKey="contribution" name="Contribucion marginal" fill={palette.amber} radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="callaoCost" name="Gasto operativo CALLAO" fill={palette.orange} radius={[8, 8, 0, 0]} />
+                    <Line type="monotone" dataKey="gap" name="Excedente / faltante preliminar" stroke={palette.olive} strokeWidth={3} dot={{ r: 4 }} />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </article>
+          </section>
+
           <section className="grid grid-cols-1 gap-6 2xl:grid-cols-[1.25fr_0.75fr]">
             <article className="panel p-5">
-              <SectionTitle icon={Layers3} title="Gasto operativo por area" caption="Ordenado por incidencia dentro del periodo y filtros elegidos." />
+              <SectionTitle icon={Layers3} title="Gasto operativo por area" caption="Monto y participacion sobre el gasto mostrado, ordenado por incidencia." />
               <div className="h-[390px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={byArea} layout="vertical" margin={{ left: 18, right: 38, top: 10, bottom: 10 }}>
+                  <BarChart data={byArea} layout="vertical" margin={{ left: 18, right: 72, top: 10, bottom: 10 }}>
                     <CartesianGrid horizontal={false} stroke="#40382e" />
                     <XAxis type="number" hide />
                     <YAxis dataKey="name" type="category" tickFormatter={titleCase} width={130} tick={{ fill: palette.muted, fontSize: 13 }} />
                     <Tooltip content={<TooltipBox />} />
                     <Bar dataKey="value" name="Gasto" radius={[0, 10, 10, 0]}>
                       {byArea.map((entry, index) => <Cell key={entry.name} fill={index === 0 ? palette.orange : index === 1 ? palette.amber : palette.olive} />)}
+                      <LabelList dataKey="share" position="right" formatter={(value) => pct(value)} fill={palette.cream} fontSize={13} fontWeight={800} />
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
@@ -421,6 +481,21 @@ function Signal({ title, value, status, text }) {
         <div className="text-xl font-black">{value}</div>
       </div>
       <p className="mt-2 text-sm leading-snug text-pronto-muted">{text}</p>
+    </div>
+  );
+}
+
+function Metric({ value, label, note, tone = "neutral" }) {
+  const valueClass = {
+    good: "text-emerald-300",
+    bad: "text-red-300",
+    neutral: "text-pronto-cream",
+  }[tone];
+  return (
+    <div className="border-l-2 border-pronto-line pl-4">
+      <div className={`break-words text-2xl font-black leading-tight ${valueClass}`}>{value}</div>
+      <div className="mt-2 text-sm font-black uppercase tracking-[0.09em] text-pronto-cream">{label}</div>
+      <p className="mt-1 text-sm leading-snug text-pronto-muted">{note}</p>
     </div>
   );
 }

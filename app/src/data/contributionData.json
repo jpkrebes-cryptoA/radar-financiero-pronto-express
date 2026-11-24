@@ -1,0 +1,11 @@
+{
+  "source": "Tablero de contribucion marginal Chess - costo promedio ponderado",
+  "scope": "CALLAO",
+  "currencyBasis": "ARS netos de IVA",
+  "periods": {
+    "07_2026": { "revenue": 291285943.67, "contribution": 63612800.42, "margin": 0.218388 },
+    "08_2026": { "revenue": 272220962.55, "contribution": 61967730.18, "margin": 0.227636 },
+    "09_2026": { "revenue": 297476843.00, "contribution": 71160077.93, "margin": 0.239211 },
+    "10_2026": { "revenue": 303709846.85, "contribution": 72396153.79, "margin": 0.238373 }
+  }
+}
