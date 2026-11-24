@@ -299,7 +299,7 @@ function App() {
               <SectionTitle icon={CircleDollarSign} title="Cobertura de estructura con contribucion marginal" caption="CALLAO: contribucion neta de IVA frente a gastos operativos registrados. No cambia con filtros de area o categoria." />
               {currentContribution ? (
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <Metric value={moneyExact(currentContribution.contribution)} label="Contribucion marginal CALLAO" note={`Margen sobre ventas: ${pct(currentContribution.margin * 100)}. Neto de IVA.`} />
+                  <Metric value={moneyExact(currentContribution.contribution)} label="Contribucion marginal CALLAO (neta de IVA)" note={`Margen sobre ventas: ${pct(currentContribution.margin * 100)}.`} />
                   <Metric value={moneyExact(currentCallaoCost)} label="Gasto operativo CALLAO" note="Base Excel: excluye ingresos, mov. internos y pago a proveedores." />
                   <Metric value={coverageRate ? pct(coverageRate) : "s/d"} label="Cobertura preliminar" note="Contribucion marginal sobre gasto operativo registrado." tone={coverageStatus} />
                   <Metric value={moneyExact(coverageGap)} label={coverageGap >= 0 ? "Excedente preliminar" : "Faltante preliminar"} note="No es cierre final: el gasto del Excel aun mezcla conceptos con y sin IVA." tone={coverageStatus} />
@@ -308,7 +308,7 @@ function App() {
                 <p className="text-pronto-muted">No hay contribucion marginal disponible para este periodo.</p>
               )}
               <p className="mt-5 border-t border-pronto-line pt-4 text-sm leading-relaxed text-pronto-muted">
-                Criterio de cierre recomendado: comparar contribucion marginal sin IVA con estructura sin IVA recuperable. Sueldos, cargas, impuestos no recuperables y gastos bancarios se conservan por su importe real. Vuelta Obligado requiere su propio ingreso neto de IVA antes de sumarla al resultado empresa.
+                La contribucion de Chess se informa neta de IVA. El saldo es preliminar porque el Excel aun mezcla gastos con IVA recuperable y conceptos sin IVA. Para el cierre, separar el credito fiscal computable; sueldos, cargas, impuestos no recuperables y gastos bancarios quedan por su importe real. Vuelta Obligado requiere su propio ingreso neto de IVA para consolidar el resultado.
               </p>
             </article>
 
